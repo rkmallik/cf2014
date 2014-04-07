@@ -1,0 +1,268 @@
+<html>
+<head>
+
+<title>Twitter CloudForms Provisioning :: Red Hat Summit</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description"
+	content="Learn, network, and experience open source at the Red Hat Summit" />
+<meta name="keywords"
+	content="open source, red hat enterprise linux, jboss middleware, virtualization, cloud computing, network, systems management, subscription, high-performance computing" />
+<meta name="author" content="Red Hat" />
+
+<!-- Bootstrap -->
+<link href="http://www.redhat.com/summit/2013/css/reset.css"
+	rel="stylesheet">
+<link
+	href="http://www.redhat.com/summit/2013/bootstrap/css/bootstrap.min.smaller.css"
+	rel="stylesheet">
+<link
+	href="http://www.redhat.com/summit/2013/bootstrap/css/bootstrap-responsive.min.css"
+	rel="stylesheet">
+<link href="http://www.redhat.com/summit/2014/css/2014-phase2.css"
+	rel="stylesheet">
+<link href="http://www.redhat.com/s/fonts/webfonts.css" rel="stylesheet">
+<script src="http://www.redhat.com/summit/2013/jquery-1.8.2.min.js"></script>
+<script type='text/javascript' src='/summit/2013/js/matchmedia.js'></script>
+<script type='text/javascript' src='/summit/2013/js/picturefill.js'></script>
+<script
+	src="http://www.redhat.com/summit/2013interim/bootstrap/js/bootstrap.min.js"></script>
+<!--[if lt IE 9]>
+<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<meta name="viewport" content="width=device-width,initial-scale=1">
+</head>
+
+<body id="page-home">
+	<link rel="stylesheet"
+		href="http://www.redhat.com/summit/pro102/theme/style-clean.css"
+		type="text/css" media="screen" />
+	<script type="text/javascript"
+		src="http://www.redhat.com/summit/pro102/projekktor-1.0.20r63.min.js"></script>
+	<script
+		src="http://www.redhat.com/partnerconference/jquery.nyroModal.custom.min.js"
+		type="text/javascript" charset="utf-8"></script>
+	<link rel="stylesheet" type="text/css" media="screen, projection"
+		href="http://www.redhat.com/summit/2013/css/nyroModal.css" />
+	<style>
+.nyroModalCloseButton {
+	top: -13px;
+	right: -13px;
+	width: 20px;
+	height: 20px;
+	text-indent: -9999em;
+	background: url(http://www.redhat.com/summit/2014/img/close-gray20.png);
+}
+
+.nyroModalCloseButton:hover {
+	background: url(http://www.redhat.com/summit/2014/img/close20.png);
+}
+
+.nyroModalCont {
+	position: absolute;
+	border: none;
+	margin: 25px;
+	background: #1b1b1b;
+}
+</style>
+	<script type="text/javascript">
+$(document).ready(function() {
+	//	var vpromoID = $('.projekktor').attr('id');
+	//	$('.bigPicture').on('click', function(e) {
+	//		$('.promoCover').addClass('goaway');
+	//		projekktor(vpromoID).setPlay();
+	//		e.preventDefault();
+	//	});
+	
+	
+	function checkSize(){
+	    if ($(window).width() > 480) {
+	        $('.nyroModal').nyroModal();
+	    }
+	}
+	
+	checkSize();
+	
+	$(window).resize(function() {
+	    checkSize();
+	});
+});
+</script>
+	<div class="container">
+		<div class="row">
+			<div class="span12 shadowman">
+				<a href="http://www.redhat.com"><img
+					src="http://www.redhat.com/summit/2014/img/rh-logo-blk.png"
+					alt="Red Hat logo" /></a>
+			</div>
+			<!-- span12 -->
+			<header class="span12">
+				<div class="row">
+					<div class="span12">
+						<div class="row">
+							<!-- summit logo -->
+							<div class="span2 summit-logo">
+								<a href="http://www.redhat.com/summit/">
+									<img src="http://www.redhat.com//summit/2014/img/summit_logo_170.png"
+										alt="Red Hat Summit logo">
+								</a>
+							</div>
+							<div class="span10 underbar hidden-phone">
+								<div class="row">
+									<div class="span2">
+										<img src="http://www.redhat.com/summit/2014/img/dates2014.png"
+											alt="" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</header>
+		</div>
+		<div id="title-area" class="speakers">
+	    	<h1 id="speakers">Hello _@tweeter@_</h1>
+		</div>
+		<div id="content-area" class="row">
+		    <div id="mainCol" class="span9">
+        	<h2>Welcome to your free workload!</h2>	   
+        	<p class="intro">You tweeted _@color@_.</p>
+        	<p class="intro">This workload is  _@os@_ and has Apache, PHP, and PostgreSQL installed as per your request. </p> 
+        	<p class="intro">This instance will be retired at _@retirement_time@_</p>
+            <p class="intro">You can SSH to this instance with the following credentials:<p>
+            <p class="intro"><h2>username: summit</h2></p>
+            <p class="intro"><h2>password: summit2014</h2></p>
+        	<?php
+        	// Setup a handle for CURL
+      		$curl_handle=curl_init();
+      		curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT,2);
+      		curl_setopt($curl_handle,CURLOPT_RETURNTRANSFER,1);
+
+			// Get the instance-id of the intance from the instance metadata
+		    curl_setopt($curl_handle,CURLOPT_URL,'http://169.254.169.254/latest/meta-data/instance-id');
+      		$instanceid = curl_exec($curl_handle);
+			$outputInstanceStr = 'We are unable to determine your instance id at this time.';
+      		if (!empty($instanceid)) {
+		        $outputInstanceStr = "This workload is " . $instanceid . ".";
+      		}
+
+	      	// Get the hostname of the intance from the instance metadata
+    		curl_setopt($curl_handle,CURLOPT_URL,'http://169.254.169.254/latest/meta-data/public-hostname');
+	        $hostname = curl_exec($curl_handle);
+            $outputHostnameStr = 'We are unable to determine the hostname at this time.';
+      		if (!empty($hostname)) {
+        		$outputHostnameStr = 'This workload can be accessed at ' . $hostname . '.';
+      		}
+                 print "<p class=\"intro\">" . $outputInstanceStr . " " . $outputHostnameStr . "</p>";
+	        ?>
+                <?php
+                  $host       = "127.0.0.1";
+                  $database   = "demo";
+                  $dbuser     = "cfme";
+                  $dbpassword = "cfme";
+                  
+                  $conn = pg_connect("host=$host dbname=$database user=$dbuser password=$dbpassword");
+
+                  if (!$conn) {
+                     die("Error in connection: " . pg_last_error()); 
+                  } 
+                  $insertSql = "INSERT INTO hitcount(hittime) values(CURRENT_TIMESTAMP)";
+                  $result = pg_query($conn, $insertSql);
+                  if (!$result) {
+                     die("Error in connection: " . pg_last_error()); 
+                  }
+                  pg_free_result($result); 
+                  $selectSql = "SELECT COUNT(*) FROM HITCOUNT";
+                  $result = pg_query($conn, $selectSql);
+                  if (!$result) {
+                     die("Error in connection: " . pg_last_error()); 
+                  }
+                  if(pg_num_rows($result) == 1) {
+                     $hitcount = pg_fetch_result($result, 0, 0); 
+        	     print "<p class=\"intro\">According to the hitcount table in your demo database this page has been viewed " . $hitcount . " times.</p>";
+                  }
+                  pg_free_result($result); 
+                  pg_close($conn);
+                ?><br></br>
+    	</div>
+	</div>
+	<style>
+#page-home .foot-reg {
+	margin-top: 30px;
+}
+
+#page-home .foot-reg+footer {
+	margin-top: 20px;
+}
+
+.foot-reg {
+	padding: 10px;
+	margin-bottom: 20px;
+	text-align: center;
+	background-color: #c00;
+	display: block;
+	width: 100%;
+	text-transform: uppercase;
+}
+
+.foot-reg a {
+	color: #fff;
+}
+
+footer a {
+	color: #fff;
+}
+
+.foot-util {
+	margin: 0;
+	padding: 10px 0 0 0;
+}
+
+.foot-util li {
+	width: 33%;
+	float: left;
+	text-align: center;
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+</style>
+	<script
+		src="http://www.redhat.com/assets/bootstrap/js/bootstrap.min.js"></script>
+
+	<img height="1" width="1" style="border-style: none;" alt=""
+		src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/990030321/?value=0&amp;label=rxV4CN_35QQQ8dOK2AM&amp;guid=ON&amp;script=0" />
+
+	<!-- begin eloqua tracking -->
+	<script type='text/javascript' language='JavaScript'
+		src='/j/elqNow/elqCfg.js'></script>
+	<script type='text/javascript' language='JavaScript'
+		src='/j/elqNow/elqImg.js'></script>
+	<!-- end eloqua tracking -->
+
+	<!-- Adobe Analytics -->
+	<script language="JavaScript" type="text/javascript"><!-- 
+    var pageType = "microsite"; // alternative: landing page
+    //--></script>
+	<script type="text/javascript"
+		src="http://www.redhat.com/assets/js/tracking/s_code.js"></script>
+	<script type="text/javascript"
+		src="http://www.redhat.com/assets/js/tracking/track_microsite.js"></script>
+	<script type="text/javascript"
+		src="http://www.redhat.com/assets/js/tracking/rh_omni_footer.js"></script>
+	<script type="text/javascript"
+		src="http://www.redhat.com/assets/js/mediatracking.js"></script>
+	<script language="JavaScript" type="text/javascript"><!--
+    if(navigator.appVersion.indexOf('MSIE')>=0)document.write(unescape('<')+'\!-'+'-')
+    //--></script>
+	<noscript>
+		test<a href="http://www.omniture.com" title="Web Analytics"><img
+			src="https://smtrcs.redhat.com/b/ss/redhatcom,redhatglobal/1/H.25.4--NS/0?[AQB]&cdp=3&[AQE]"
+			height="1" width="1" border="0" alt="" /></a>
+	</noscript>
+	<!--/DO NOT REMOVE/-->
+	<!-- End Adobe Analytics -->
+
+</body>
+</html>
