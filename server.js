@@ -62,21 +62,21 @@ function provision(request){
 }
 
 function getcolor(text){
-	if (((text.indexOf("#blue")) != -1)){
+	if (((text.toLowerCase().indexOf("#blue")) != -1)){
 		return "blue";		
-	} else if (((text.indexOf("#red")) != -1)){
+	} else if (((text.toLowerCase().indexOf("#red")) != -1)){
 		return "red";
-	} else if (((text.indexOf("#pink")) != -1)){
+	} else if (((text.toLowerCase().indexOf("#pink")) != -1)){
 		return "pink";
-	} else if (((text.indexOf("#yellow")) != -1)){
+	} else if (((text.toLowerCase().indexOf("#yellow")) != -1)){
 		return "yellow";
-	} else if (((text.indexOf("#green")) != -1)){
+	} else if (((text.toLowerCase().indexOf("#green")) != -1)){
 		return "green";
-	} else if (((text.indexOf("#orange")) != -1)){
+	} else if (((text.toLowerCase().indexOf("#orange")) != -1)){
 		return "orange";
-	} else if (((text.indexOf("#purple")) != -1)){
+	} else if (((text.toLowerCase().indexOf("#purple")) != -1)){
 		return "purple";
-	} else if (((text.indexOf("#black")) != -1)){
+	} else if (((text.toLowerCase().indexOf("#black")) != -1)){
 		return "black";
 	}  else{
 		return "black";	
@@ -101,7 +101,7 @@ stream.on('tweet', function (tweet) {
 	// don't do retweets
 	if (tweet.retweeted_status == null){
 		// check if the tweet contains both #postgres and #mysql
-		if (((tweet.text.indexOf("#postgres")) != -1) && ((tweet.text.indexOf("#mysql")) != -1)){
+		if (((tweet.text.toLowerCase().indexOf("#postgres")) != -1) && ((tweet.text.toLowerCase().indexOf("#mysql")) != -1)){
 			console.log("tweet: "+tweet.id_str+" by @"+tweet.user.screen_name+" has both #postgres and #mysql, tweeting user to try again");
 			T.post('statuses/update', { status: "@"+tweet.user.screen_name+" Try again with either just #postgres or #mysql. You can't have both in this demo! "+tweet.id_str, in_reply_to_status_id: tweet.id_str }, function(err, reply) {
 				if (err){
@@ -110,7 +110,7 @@ stream.on('tweet', function (tweet) {
 			});
 		}
 		// check if the tweet contains both #rhel6 and #rhel7
-		else if (((tweet.text.indexOf("#rhel6")) != -1) && ((tweet.text.indexOf("#rhel7")) != -1)){
+		else if (((tweet.text.toLowerCase().indexOf("#rhel6")) != -1) && ((tweet.text.toLowerCase().indexOf("#rhel7")) != -1)){
 			console.log("tweet: "+tweet.id_str+" by @"+tweet.user.screen_name+" has both #rhel6 and #rhel7, tweeting user to try again");
 			T.post('statuses/update', { status: "@"+tweet.user.screen_name+" Try again with either just #rhel6 or #rhel7. You can't have both! "+tweet.id_str, in_reply_to_status_id: tweet.id_str }, function(err, reply) {
 				if (err){
@@ -119,7 +119,7 @@ stream.on('tweet', function (tweet) {
 			});
 		}
 		// check if the tweet contains neither #postgres and #mysql
-		else if (((tweet.text.indexOf("#postgres")) == -1) && ((tweet.text.indexOf("#mysql")) == -1)){
+		else if (((tweet.text.toLowerCase().indexOf("#postgres")) == -1) && ((tweet.text.toLowerCase().indexOf("#mysql")) == -1)){
 			console.log("tweet: "+tweet.id_str+" by @"+tweet.user.screen_name+" has neither #postgres nor #mysql, tweeting user to try again");
 			T.post('statuses/update', { status: "@"+tweet.user.screen_name+" Try again with either #postgres or #mysql. You have to specify one for this demo! "+tweet.id_str, in_reply_to_status_id: tweet.id_str }, function(err, reply) {
 				if (err){
@@ -128,7 +128,7 @@ stream.on('tweet', function (tweet) {
 			});
 		}
 		// check if the tweet contains neither #rhel6 and #rhel7
-		else if (((tweet.text.indexOf("#rhel6")) == -1) && ((tweet.text.indexOf("#rhel7")) == -1)){
+		else if (((tweet.text.toLowerCase().indexOf("#rhel6")) == -1) && ((tweet.text.toLowerCase().indexOf("#rhel7")) == -1)){
 			console.log("tweet: "+tweet.id_str+" by @"+tweet.user.screen_name+" has neither #rhel6 nor #rhel7, tweeting user to try again");
 			T.post('statuses/update', { status: "@"+tweet.user.screen_name+" Try again with either #rhel6 or #rhel7. You have to specify one for this demo! "+tweet.id_str, in_reply_to_status_id: tweet.id_str }, function(err, reply) {
 				if (err){
@@ -136,19 +136,19 @@ stream.on('tweet', function (tweet) {
 				}
 			});
 		}
-		else if (((tweet.text.indexOf("#postgres")) != -1) && ((tweet.text.indexOf("#rhel6")) != -1)){
+		else if (((tweet.text.toLowerCase().indexOf("#postgres")) != -1) && ((tweet.text.toLowerCase().indexOf("#rhel6")) != -1)){
 			console.log("tweet: "+tweet.id_str+" by @"+tweet.user.screen_name+" is a #postgres #rhel6 request, provisioning");
 			provision(buildRequest(r6p, tweet.user.screen_name, getcolor(tweet.text),tweet.id_str));
 		}
-		else if (((tweet.text.indexOf("#mysql")) != -1) && ((tweet.text.indexOf("#rhel6")) != -1)){
+		else if (((tweet.text.toLowerCase().indexOf("#mysql")) != -1) && ((tweet.text.toLowerCase().indexOf("#rhel6")) != -1)){
 			console.log("tweet: "+tweet.id_str+" by @"+tweet.user.screen_name+" is a #mysql #rhel6 request, provisioning");
 			provision(buildRequest(r6m, tweet.user.screen_name, getcolor(tweet.text),tweet.id_str));
 		}
-		else if (((tweet.text.indexOf("#postgres")) != -1) && ((tweet.text.indexOf("#rhel7")) != -1)){
+		else if (((tweet.text.toLowerCase().indexOf("#postgres")) != -1) && ((tweet.text.toLowerCase().indexOf("#rhel7")) != -1)){
 			console.log("tweet: "+tweet.id_str+" by @"+tweet.user.screen_name+" is a #postgres #rhel7 request, provisioning");
 			provision(buildRequest(r7p, tweet.user.screen_name, getcolor(tweet.text),tweet.id_str));
 		}
-		else if (((tweet.text.indexOf("#mysql")) != -1) && ((tweet.text.indexOf("#rhel7")) != -1)){
+		else if (((tweet.text.toLowerCase().indexOf("#mysql")) != -1) && ((tweet.text.toLowerCase().indexOf("#rhel7")) != -1)){
 			console.log("tweet: "+tweet.id_str+" by @"+tweet.user.screen_name+" is a #mysql #rhel7 request, provisioning");
 			provision(buildRequest(r7m, tweet.user.screen_name, getcolor(tweet.text),tweet.id_str));
 		}
