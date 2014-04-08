@@ -108,7 +108,6 @@ stream.on('tweet', function (tweet) {
 					console.log(err);
 				}
 			});
-			break;
 		}
 		// check if the tweet contains both #rhel6 and #rhel7
 		else if (((tweet.text.toLowerCase().indexOf("#rhel6")) != -1) && ((tweet.text.toLowerCase().indexOf("#rhel7")) != -1)){
@@ -118,7 +117,6 @@ stream.on('tweet', function (tweet) {
 					console.log(err);
 				}
 			});
-			break;
 		}
 		// check if the tweet contains neither #postgres and #mysql
 		else if (((tweet.text.toLowerCase().indexOf("#postgres")) == -1) && ((tweet.text.toLowerCase().indexOf("#mysql")) == -1)){
@@ -128,7 +126,6 @@ stream.on('tweet', function (tweet) {
 					console.log(err);
 				}
 			});
-			break;
 		}
 		// check if the tweet contains neither #rhel6 and #rhel7
 		else if (((tweet.text.toLowerCase().indexOf("#rhel6")) == -1) && ((tweet.text.toLowerCase().indexOf("#rhel7")) == -1)){
@@ -138,7 +135,6 @@ stream.on('tweet', function (tweet) {
 					console.log(err);
 				}
 			});
-			break;
 		}
 		else if (((tweet.text.toLowerCase().indexOf("#postgres")) != -1) && ((tweet.text.toLowerCase().indexOf("#rhel6")) != -1)){
 			console.log("tweet: "+tweet.id_str+" by @"+tweet.user.screen_name+" is a #postgres #rhel6 request, provisioning");
@@ -148,7 +144,6 @@ stream.on('tweet', function (tweet) {
 					console.log(err);
 				}
 			});
-			break;
 		}
 		else if (((tweet.text.toLowerCase().indexOf("#mysql")) != -1) && ((tweet.text.toLowerCase().indexOf("#rhel6")) != -1)){
 			console.log("tweet: "+tweet.id_str+" by @"+tweet.user.screen_name+" is a #mysql #rhel6 request, provisioning");
@@ -158,7 +153,6 @@ stream.on('tweet', function (tweet) {
 					console.log(err);
 				}
 			});
-			break;
 		}
 		else if (((tweet.text.toLowerCase().indexOf("#postgres")) != -1) && ((tweet.text.toLowerCase().indexOf("#rhel7")) != -1)){
 			console.log("tweet: "+tweet.id_str+" by @"+tweet.user.screen_name+" is a #postgres #rhel7 request, provisioning");
@@ -168,21 +162,18 @@ stream.on('tweet', function (tweet) {
 					console.log(err);
 				}
 			});
-			break;
 		}
 		else if (((tweet.text.toLowerCase().indexOf("#mysql")) != -1) && ((tweet.text.toLowerCase().indexOf("#rhel7")) != -1)){
 			console.log("tweet: "+tweet.id_str+" by @"+tweet.user.screen_name+" is a #mysql #rhel7 request, provisioning");
 			provision(buildRequest(r7m, tweet.user.screen_name, getcolor(tweet.text),tweet.id_str));
+			T.post('statuses/update', { status: "@"+tweet.user.screen_name+" Got it! Provisioning your #rhel7 #mysql #"+ getcolor(tweet.text) +" workload now. "+tweet.id_str, in_reply_to_status_id: tweet.id_str }, function(err, reply) {
+				if (err){
+					console.log(err);
+				}
+			});
 		}
-		T.post('statuses/update', { status: "@"+tweet.user.screen_name+" Got it! Provisioning your #rhel7 #mysql #"+ getcolor(tweet.text) +" workload now. "+tweet.id_str, in_reply_to_status_id: tweet.id_str }, function(err, reply) {
-			if (err){
-				console.log(err);
-			}
-			break;
-		});
 	} else {
-		console.log("tweet: "+tweet.id_str+" by @"+tweet.user.screen_name+" is a retweet, doing nothing");
-		break;
+		console.log("tweet: "+tweet.id_str+" by @"+tweet.user.screen_name+" is a retweet, doing nothing");	
 	}
 })
 
