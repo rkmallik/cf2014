@@ -139,7 +139,7 @@ stream.on('tweet', function (tweet) {
 		else if (((tweet.text.toLowerCase().indexOf("#postgres")) != -1) && ((tweet.text.toLowerCase().indexOf("#rhel6")) != -1)){
 			console.log("tweet: "+tweet.id_str+" by @"+tweet.user.screen_name+" is a #postgres #rhel6 request, provisioning");
 			provision(buildRequest(r6p, tweet.user.screen_name, getcolor(tweet.text),tweet.id_str));
-			T.post('statuses/update', { status: "@"+tweet.user.screen_name+" Got it! Provisioning your #rhel6 #postgres #"+ getcolor(tweet.text) +"workload now. "+tweet.id_str, in_reply_to_status_id: tweet.id_str }, function(err, reply) {
+			T.post('statuses/update', { status: "@"+tweet.user.screen_name+" Got it! Provisioning your #rhel6 #postgres #"+ getcolor(tweet.text) +" workload now. "+tweet.id_str, in_reply_to_status_id: tweet.id_str }, function(err, reply) {
 				if (err){
 					console.log(err);
 				}
@@ -148,7 +148,7 @@ stream.on('tweet', function (tweet) {
 		else if (((tweet.text.toLowerCase().indexOf("#mysql")) != -1) && ((tweet.text.toLowerCase().indexOf("#rhel6")) != -1)){
 			console.log("tweet: "+tweet.id_str+" by @"+tweet.user.screen_name+" is a #mysql #rhel6 request, provisioning");
 			provision(buildRequest(r6m, tweet.user.screen_name, getcolor(tweet.text),tweet.id_str));
-			T.post('statuses/update', { status: "@"+tweet.user.screen_name+" Got it! Provisioning your #rhel6 #mysql #"+ getcolor(tweet.text) +"workload now. "+tweet.id_str, in_reply_to_status_id: tweet.id_str }, function(err, reply) {
+			T.post('statuses/update', { status: "@"+tweet.user.screen_name+" Got it! Provisioning your #rhel6 #mysql #"+ getcolor(tweet.text) +" workload now. "+tweet.id_str, in_reply_to_status_id: tweet.id_str }, function(err, reply) {
 				if (err){
 					console.log(err);
 				}
@@ -157,7 +157,7 @@ stream.on('tweet', function (tweet) {
 		else if (((tweet.text.toLowerCase().indexOf("#postgres")) != -1) && ((tweet.text.toLowerCase().indexOf("#rhel7")) != -1)){
 			console.log("tweet: "+tweet.id_str+" by @"+tweet.user.screen_name+" is a #postgres #rhel7 request, provisioning");
 			provision(buildRequest(r7p, tweet.user.screen_name, getcolor(tweet.text),tweet.id_str));
-			T.post('statuses/update', { status: "@"+tweet.user.screen_name+" Got it! Provisioning your #rhel7 #postgres #"+ getcolor(tweet.text) +"workload now. "+tweet.id_str, in_reply_to_status_id: tweet.id_str }, function(err, reply) {
+			T.post('statuses/update', { status: "@"+tweet.user.screen_name+" Got it! Provisioning your #rhel7 #postgres #"+ getcolor(tweet.text) +" workload now. "+tweet.id_str, in_reply_to_status_id: tweet.id_str }, function(err, reply) {
 				if (err){
 					console.log(err);
 				}
@@ -167,7 +167,7 @@ stream.on('tweet', function (tweet) {
 			console.log("tweet: "+tweet.id_str+" by @"+tweet.user.screen_name+" is a #mysql #rhel7 request, provisioning");
 			provision(buildRequest(r7m, tweet.user.screen_name, getcolor(tweet.text),tweet.id_str));
 		}
-		T.post('statuses/update', { status: "@"+tweet.user.screen_name+" Got it! Provisioning your #rhel7 #mysql #"+ getcolor(tweet.text) +"workload now. "+tweet.id_str, in_reply_to_status_id: tweet.id_str }, function(err, reply) {
+		T.post('statuses/update', { status: "@"+tweet.user.screen_name+" Got it! Provisioning your #rhel7 #mysql #"+ getcolor(tweet.text) +" workload now. "+tweet.id_str, in_reply_to_status_id: tweet.id_str }, function(err, reply) {
 			if (err){
 				console.log(err);
 			}
