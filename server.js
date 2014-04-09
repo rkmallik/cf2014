@@ -92,15 +92,15 @@ function buildRequest(request, username, color, id){
 };
 
 // giddyup
-console.log("starting engines");
-var provision_limit = 1;
+console.log("starting engines "+ new Date());
+var provision_limit = 500;
 var provision_count = 0;
 console.log("Provision Limit: "+provision_limit+" Provision Count: "+provision_count);
 
 var stream = T.stream('statuses/filter', { track: '#cloudforms2014'});
 
 stream.on('tweet', function (tweet) {
-	console.log("Got request. id: "+tweet.id_str+" tweet: @"+tweet.user.screen_name+": "+tweet.text);
+	console.log("Got request. id: "+tweet.id_str+" tweet: @"+tweet.user.screen_name+": "+tweet.text+" at: "+new Date());
 	if (provision_count <= provision_limit){
 		// don't do retweets
 		if (tweet.retweeted_status == null){
@@ -141,7 +141,7 @@ stream.on('tweet', function (tweet) {
 				});
 			}
 			else if (((tweet.text.toLowerCase().indexOf("#postgres")) != -1) && ((tweet.text.toLowerCase().indexOf("#rhel6")) != -1)){
-				console.log("tweet: "+tweet.id_str+" by @"+tweet.user.screen_name+" is a #postgres #rhel6 request, provisioning");
+				console.log("tweet: "+tweet.id_str+" by @"+tweet.user.screen_name+" is a #postgres #rhel6 request, provisioning at: "+new Date());
 				provision(buildRequest(r6p, tweet.user.screen_name, getcolor(tweet.text),tweet.id_str));
 				T.post('statuses/update', { status: "@"+tweet.user.screen_name+" Got it! Provisioning your #rhel6 #postgres #"+ getcolor(tweet.text) +" workload now. "+tweet.id_str, in_reply_to_status_id: tweet.id_str }, function(err, reply) {
 					if (err){
@@ -152,7 +152,7 @@ stream.on('tweet', function (tweet) {
 				console.log("Provision Limit: "+provision_limit+" Provision Count: "+provision_count);
 			}
 			else if (((tweet.text.toLowerCase().indexOf("#mysql")) != -1) && ((tweet.text.toLowerCase().indexOf("#rhel6")) != -1)){
-				console.log("tweet: "+tweet.id_str+" by @"+tweet.user.screen_name+" is a #mysql #rhel6 request, provisioning");
+				console.log("tweet: "+tweet.id_str+" by @"+tweet.user.screen_name+" is a #mysql #rhel6 request, provisioning at: "+new Date());
 				provision(buildRequest(r6m, tweet.user.screen_name, getcolor(tweet.text),tweet.id_str));
 				T.post('statuses/update', { status: "@"+tweet.user.screen_name+" Got it! Provisioning your #rhel6 #mysql #"+ getcolor(tweet.text) +" workload now. "+tweet.id_str, in_reply_to_status_id: tweet.id_str }, function(err, reply) {
 					if (err){
@@ -163,7 +163,7 @@ stream.on('tweet', function (tweet) {
 				console.log("Provision Limit: "+provision_limit+" Provision Count: "+provision_count);
 			}
 			else if (((tweet.text.toLowerCase().indexOf("#postgres")) != -1) && ((tweet.text.toLowerCase().indexOf("#rhel7")) != -1)){
-				console.log("tweet: "+tweet.id_str+" by @"+tweet.user.screen_name+" is a #postgres #rhel7 request, provisioning");
+				console.log("tweet: "+tweet.id_str+" by @"+tweet.user.screen_name+" is a #postgres #rhel7 request, provisioning at: "+new Date());
 				provision(buildRequest(r7p, tweet.user.screen_name, getcolor(tweet.text),tweet.id_str));
 				T.post('statuses/update', { status: "@"+tweet.user.screen_name+" Got it! Provisioning your #rhel7 #postgres #"+ getcolor(tweet.text) +" workload now. "+tweet.id_str, in_reply_to_status_id: tweet.id_str }, function(err, reply) {
 					if (err){
@@ -174,7 +174,7 @@ stream.on('tweet', function (tweet) {
 				console.log("Provision Limit: "+provision_limit+" Provision Count: "+provision_count);
 			}
 			else if (((tweet.text.toLowerCase().indexOf("#mysql")) != -1) && ((tweet.text.toLowerCase().indexOf("#rhel7")) != -1)){
-				console.log("tweet: "+tweet.id_str+" by @"+tweet.user.screen_name+" is a #mysql #rhel7 request, provisioning");
+				console.log("tweet: "+tweet.id_str+" by @"+tweet.user.screen_name+" is a #mysql #rhel7 request, provisioning at: "+new Date());
 				provision(buildRequest(r7m, tweet.user.screen_name, getcolor(tweet.text),tweet.id_str));
 				T.post('statuses/update', { status: "@"+tweet.user.screen_name+" Got it! Provisioning your #rhel7 #mysql #"+ getcolor(tweet.text) +" workload now. "+tweet.id_str, in_reply_to_status_id: tweet.id_str }, function(err, reply) {
 					if (err){
@@ -208,7 +208,7 @@ server.use(restify.bodyParser());
 
 // notify provision is complete REST call
 server.put('/notify/:ip/:username/:id', function (req, res, next) {
-	console.log("recieved REST notify call, ip: "+req.params.ip+" from username: "+req.params.username+" tweet id: "+req.params.id);
+	console.log("recieved REST notify call, ip: "+req.params.ip+" from username: "+req.params.username+" tweet id: "+req.params.id+" at: "+new Date());
 	// tweet back user the IP
 	request('http://'+req.params.ip, function (error, response, body) {
 		if (!error && response.statusCode == 200) {
@@ -283,5 +283,5 @@ server.get(/.*/, restify.serveStatic({
 }));
 
 server.listen(process.env.OPENSHIFT_NODEJS_PORT, process.env.OPENSHIFT_NODEJS_IP, function () {
-  console.log('%s listening at %s', server.name, server.url);
+  console.log('%s listening at %s at '+new Date(), server.name, server.url);
 });
