@@ -13,7 +13,7 @@ var T = new Twit({
 	  , consumer_secret:      process.env.twitter_consumer_secret
 	  , access_token:         process.env.twitter_access_token
 	  , access_token_secret:  process.env.twitter_access_token_secret
-})
+});
 
 // parameterized requests
 var r6p = '<SOAP-ENV:Envelope xmlns:m="urn:ActionWebService" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"  SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">  <SOAP-ENV:Body>    <VmProvisionRequest xmlns="urn:ActionWebService">      <version xsi:type="xsd:string">1.1</version><templateFields xsi:type="xsd:string">name=CFME_PGSQL_RHEL64_v2|request_type=template|guid=b5314e6c-ab23-11e3-a745-22000a0d8347</templateFields><vmFields xsi:type="xsd:string">vm_name=changeme|customization_template_id=1000000000008|instance_type=1000000000001|placement_auto=false|guest_access_key_pair=1000000000003|placement_availability_zone=1000000000001|security_groups=1000000000003|src_ems_id=1000000000001</vmFields><requester xsi:type="xsd:string">"user_name=admin|owner_last_name=ServiceNOW|owner_first_name=ServiceNOW|owner_email=ServiceNOW@evm.com</requester><tags xsi:type="xsd:string">retirement=12|show=summit</tags><options xsi:type="m:VmdbwsSupport..ProvisionOptions">      <values xsi:type="xsd:string"></values>      <ems_custom_attributes xsi:type="xsd:string"></ems_custom_attributes><miq_custom_attributes xsi:type="xsd:string">color=%COLOR%|application=postgresql|tweeter=%TWITTER_USERNAME%|summit_user_passwd=rirm1234|tweet_id=%TWEET_ID%</miq_custom_attributes></options>    </VmProvisionRequest>  </SOAP-ENV:Body></SOAP-ENV:Envelope>';
@@ -59,7 +59,7 @@ function provision(request){
 	req.write(request);
 	req.end();
 	
-}
+};
 
 function getcolor(text){
 	if (((text.toLowerCase().indexOf("#blue")) != -1)){
@@ -81,7 +81,7 @@ function getcolor(text){
 	}  else{
 		return "black";	
 	}
-}
+};
 
 // helper to replace param values in request
 function buildRequest(request, username, color, id){
@@ -89,12 +89,12 @@ function buildRequest(request, username, color, id){
 	request = request.replace("%COLOR%", color);
 	request = request.replace("%TWEET_ID%", id);
 	return request;
-}
+};
 
 // giddyup
 console.log("starting engines");
 
-var stream = T.stream('statuses/filter', { track: '#cloudforms2014'})
+var stream = T.stream('statuses/filter', { track: '#cloudforms2014'});
 
 stream.on('tweet', function (tweet) {
 	console.log("Got request. id: "+tweet.id_str+" tweet: @"+tweet.user.screen_name+": "+tweet.text);
@@ -175,7 +175,7 @@ stream.on('tweet', function (tweet) {
 	} else {
 		console.log("tweet: "+tweet.id_str+" by @"+tweet.user.screen_name+" is a retweet, doing nothing");	
 	}
-})
+});
 
 var server = restify.createServer({
   name: 'cfdemo_rest_notify',
