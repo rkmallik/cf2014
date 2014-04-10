@@ -106,7 +106,7 @@ function notifyTweet(ip, username, id){
 		}
 		if (error){
 			console.log("request error details: "+ error);	
-			notifyTweet(ip, username, id);
+			setTimeout(notifyTweet(ip, username, id),5000);
 		}
 	}),5000);
 };
