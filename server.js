@@ -93,22 +93,20 @@ function buildRequest(request, username, color, id){
 
 function notifyTweet(ip, username, id){
 	// tweet back user the IP
-	setTimeout(request('http://'+ip, function (error, response, body) {
+	request('http://'+ip, function (error, response, body) {
 		if (!error && response.statusCode == 200) {
 			var re = new RegExp("ec2-[0-9-]+.[a-z-]+[0-9-].amazonaws.com");
 			var hostname = re.exec(body);
 			T.post('statuses/update', { status: "@"+username+" Your workload is now provisioned! Check it out here: http://"+hostname, in_reply_to_status_id: id }, function(err, reply) {
-				console.log("tweet reply: "+reply);
 				if (err){
 					console.log(err);
 			    }
 			});
 		}
 		if (error){
-			console.log("request error details: "+ error);	
-			setTimeout(notifyTweet(ip, username, id),5000);
+			notifyTweet(ip, username, id);
 		}
-	}),5000);
+	});
 };
 
 // giddyup
