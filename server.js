@@ -215,6 +215,7 @@ server.put('/notify/:ip/:username/:id', function (req, res, next) {
 			var re = new RegExp("ec2-[0-9-]+.[a-z-]+[0-9-].amazonaws.com");
 			var hostname = re.exec(body);
 			T.post('statuses/update', { status: "@"+req.params.username+" Your workload is now provisioned! Check it out here: http://"+hostname, in_reply_to_status_id: req.params.id }, function(err, reply) {
+				console.log("tweet reply: "+reply);
 				if (err){
 					console.log(err);
 			    }
@@ -227,7 +228,7 @@ server.put('/notify/:ip/:username/:id', function (req, res, next) {
 
 // retire REST call
 server.put('/retire/:ip/:username/:id', function (req, res, next) {
-	console.log("recieved REST retire call, ip: "+req.params.ip+" for username: "+req.params.username+" tweet id: "+req.params.id);
+	console.log("recieved REST retire call, ip: "+req.params.ip+" for username: "+req.params.username+" tweet id: "+req.params.id+" at: "+new Date());
 	// tweet back user the IP
 	T.post('statuses/update', { status: "@"+req.params.username+" We've just retired your workload. Thanks for participating in this demo!", in_reply_to_status_id: req.params.id }, function(err, reply) {
 		if (err){
