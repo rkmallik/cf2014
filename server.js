@@ -214,6 +214,7 @@ server.put('/notify/:ip/:username/:id', function (req, res, next) {
 		if (!error && response.statusCode == 200) {
 			var re = new RegExp("ec2-[0-9-]+.[a-z-]+[0-9-].amazonaws.com");
 			var hostname = re.exec(body);
+			console.log("hostname: "+hostname);
 			T.post('statuses/update', { status: "@"+req.params.username+" Your workload is now provisioned! Check it out here: http://"+hostname, in_reply_to_status_id: req.params.id }, function(err, reply) {
 				console.log("tweet reply: "+reply);
 				if (err){
@@ -221,6 +222,10 @@ server.put('/notify/:ip/:username/:id', function (req, res, next) {
 			    }
 			});
 		}
+		if (error){
+			console.log("request error details: "+ error);	
+		}		
+		console.log("response details from request on ip details: "+ response);
 	})
 	res.send(req.params);
 	return next();
