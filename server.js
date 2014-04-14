@@ -123,7 +123,7 @@ stream.on('tweet', function (tweet) {
 		// don't do retweets
 		if (tweet.retweeted_status == null){
 			// check if the tweet contains both #postgres and #mysql
-			if (((tweet.text.toLowerCase().indexOf("#postgres")) != -1) && ((tweet.text.toLowerCase().indexOf("#mysql")) != -1)){
+			if ((((tweet.text.toLowerCase().indexOf("#postgres")) != -1) || ((tweet.text.toLowerCase().indexOf("#postgresql")) != -1)) && ((tweet.text.toLowerCase().indexOf("#mysql")) != -1)){
 				console.log("tweet: "+tweet.id_str+" by @"+tweet.user.screen_name+" has both #postgres and #mysql, tweeting user to try again");
 				T.post('statuses/update', { status: "@"+tweet.user.screen_name+" Try again with either just #postgres or #mysql. You can't have both in this demo! "+tweet.id_str, in_reply_to_status_id: tweet.id_str }, function(err, reply) {
 					if (err){
@@ -141,7 +141,7 @@ stream.on('tweet', function (tweet) {
 				});
 			}
 			// check if the tweet contains neither #postgres and #mysql
-			else if (((tweet.text.toLowerCase().indexOf("#postgres")) == -1) && ((tweet.text.toLowerCase().indexOf("#mysql")) == -1)){
+			else if ((((tweet.text.toLowerCase().indexOf("#postgres")) == -1) || ((tweet.text.toLowerCase().indexOf("#postgresql")) == -1)) && ((tweet.text.toLowerCase().indexOf("#mysql")) == -1)){
 				console.log("tweet: "+tweet.id_str+" by @"+tweet.user.screen_name+" has neither #postgres nor #mysql, tweeting user to try again");
 				T.post('statuses/update', { status: "@"+tweet.user.screen_name+" Try again with either #postgres or #mysql. You have to specify one for this demo! "+tweet.id_str, in_reply_to_status_id: tweet.id_str }, function(err, reply) {
 					if (err){
@@ -158,7 +158,7 @@ stream.on('tweet', function (tweet) {
 					}
 				});
 			}
-			else if (((tweet.text.toLowerCase().indexOf("#postgres")) != -1) && ((tweet.text.toLowerCase().indexOf("#rhel6")) != -1)){
+			else if ((((tweet.text.toLowerCase().indexOf("#postgres")) != -1) || ((tweet.text.toLowerCase().indexOf("#postgresql")) != -1)) && ((tweet.text.toLowerCase().indexOf("#rhel6")) != -1)){
 				console.log("tweet: "+tweet.id_str+" by @"+tweet.user.screen_name+" is a #postgres #rhel6 request, provisioning at: "+new Date());
 				provision(buildRequest(r6p, tweet.user.screen_name, getcolor(tweet.text),tweet.id_str));
 				T.post('statuses/update', { status: "@"+tweet.user.screen_name+" Got it! Provisioning your #rhel6 #postgres #"+ getcolor(tweet.text) +" workload now. "+tweet.id_str, in_reply_to_status_id: tweet.id_str }, function(err, reply) {
@@ -180,7 +180,7 @@ stream.on('tweet', function (tweet) {
 				provision_count++;
 				console.log("Provision Limit: "+provision_limit+" Provision Count: "+provision_count);
 			}
-			else if (((tweet.text.toLowerCase().indexOf("#postgres")) != -1) && ((tweet.text.toLowerCase().indexOf("#rhel7")) != -1)){
+			else if ((((tweet.text.toLowerCase().indexOf("#postgres")) != -1) || ((tweet.text.toLowerCase().indexOf("#postgresql")) != -1)) && ((tweet.text.toLowerCase().indexOf("#rhel7")) != -1)){
 				console.log("tweet: "+tweet.id_str+" by @"+tweet.user.screen_name+" is a #postgres #rhel7 request, provisioning at: "+new Date());
 				provision(buildRequest(r7p, tweet.user.screen_name, getcolor(tweet.text),tweet.id_str));
 				T.post('statuses/update', { status: "@"+tweet.user.screen_name+" Got it! Provisioning your #rhel7 #postgres #"+ getcolor(tweet.text) +" workload now. "+tweet.id_str, in_reply_to_status_id: tweet.id_str }, function(err, reply) {
