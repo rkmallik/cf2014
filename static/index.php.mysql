@@ -129,7 +129,6 @@ $(document).ready(function() {
         	<h2>Cloudforms has provisioned your workload!</h2>	   
         	<p class="intro">You tweeted _@color@_.</p>
         	<p class="intro">This workload is _@os@_ and has Apache, PHP, and MySQL installed as per your request.</p>
-        	<p class="intro">Cloudforms will retire this workload in _@retirement_time@_</p>
             <p class="intro">You can SSH to this instance with the following credentials:<p>
             <p class="intro"><h2>username: summit</h2></p>
             <p class="intro"><h2>password: summit2014</h2></p>
